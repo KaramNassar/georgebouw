@@ -114,9 +114,6 @@ class ServiceResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('icon')
-                    ->label('')
-                    ->icon(fn (Service $record) => $record->icon),
                 TextColumn::make('name')
                     ->searchable()
                     ->sortable()

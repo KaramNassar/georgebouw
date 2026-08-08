@@ -8,6 +8,6 @@
       <img alt="GEORGE BOUW Logo" class="h-8 w-auto" src="{{ asset('images/logo.png') }}"/>
       <span><span class="block font-display text-sm font-extrabold">GEORGE BOUW</span><span class="block text-[10px] font-semibold uppercase tracking-[0.25em] text-crimson2">{{ __('messages.foot.tag') }}</span></span>
     </a>
-    <p class="text-xs text-neutral">© 2026 GEORGE BOUW · info@georgebouw.nl · +31 6 84954212</p>
+    <p class="text-xs text-neutral">© 2026 GEORGE BOUW</p>
   </div>
 </footer>

@@ -7,10 +7,9 @@ use App\Models\Project;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
-use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
-use LaraZeus\SpatieTranslatable\Resources\Concerns\Translatable;
 use Filament\Resources\Resource;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
@@ -20,6 +19,7 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use LaraZeus\SpatieTranslatable\Resources\Concerns\Translatable;
 
 class ProjectResource extends Resource
 {
@@ -99,12 +99,14 @@ class ProjectResource extends Resource
                     SpatieMediaLibraryFileUpload::make('image')
                         ->collection('image')
                         ->image()
+                        ->maxSize(10240)
                         ->helperText('Hero / card image, also used as the before/after "before" frame.'),
                     SpatieMediaLibraryFileUpload::make('gallery')
                         ->collection('gallery')
                         ->image()
                         ->multiple()
                         ->reorderable()
+                        ->maxSize(10240)
                         ->helperText('Project photo album.'),
                 ]),
         ]);
