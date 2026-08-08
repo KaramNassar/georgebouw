@@ -4,11 +4,11 @@
 @section('description', 'Bekijk onze afgeronde bouw- en renovatieprojecten.')
 
 @section('content')
-<main class="pt-24">
+<main class="pt-32">
 <!-- back link -->
 <div class="mx-auto max-w-6xl px-4 sm:px-6">
 <a class="inline-flex items-center gap-2 text-sm text-neutral hover:text-white" href="/#portfolio">
-<i class="h-4 w-4" data-lucide="arrow-left"></i><span data-i18n="nav.portfolio">Projecten</span>
+<i class="h-4 w-4" data-lucide="arrow-left"></i><span>{{ __('messages.nav.portfolio') }}</span>
 </a>
 </div>
 <!-- HERO -->
@@ -17,12 +17,15 @@
 <div class="absolute -top-24 right-0 h-80 w-80 rounded-full bg-crimson/15 blur-[120px]"></div>
 <div class="relative mx-auto grid max-w-6xl items-center gap-10 px-4 sm:px-6 lg:grid-cols-2">
 <div class="reveal">
-<span class="inline-block rounded-full bg-crimson px-3 py-1 text-[11px] font-semibold uppercase tracking-wide" id="pCatBadge"></span>
-<h1 class="mt-4 font-display text-3xl font-black sm:text-5xl" id="pTitle"></h1>
-<div class="mt-6 flex flex-wrap gap-x-6 gap-y-2 text-sm text-neutral" id="pMeta"></div>
+<span class="inline-block rounded-full bg-crimson px-3 py-1 text-[11px] font-semibold uppercase tracking-wide">{{ ucfirst($project->category) }}</span>
+<h1 class="mt-4 font-display text-3xl font-black sm:text-5xl">{{ $project->title }}</h1>
+<div class="mt-6 flex flex-wrap gap-x-6 gap-y-2 text-sm text-neutral">
+<span><i data-lucide="map-pin" class="mr-1 h-4 w-4 inline"></i>{{ $project->location }}</span>
+<span><i data-lucide="clock" class="mr-1 h-4 w-4 inline"></i>{{ $project->duration }}</span>
+</div>
 </div>
 <div class="reveal">
-<img alt="" class="aspect-[4/3] w-full rounded-2xl border border-white/10 object-cover crimson-glow" id="pHeroImg"/>
+<img alt="{{ $project->title }}" class="aspect-[4/3] w-full rounded-2xl border border-white/10 object-cover crimson-glow" src="{{ $project->heroImageUrl() }}"/>
 </div>
 </div>
 </section>
@@ -30,15 +33,44 @@
 <section class="py-10">
 <div class="mx-auto grid max-w-6xl gap-8 px-4 sm:px-6 lg:grid-cols-3">
 <div class="reveal lg:col-span-2">
-<h2 class="font-display text-2xl font-extrabold" data-i18n="lbl.overview">Over dit project</h2>
-<p class="mt-4 leading-relaxed text-neutral" id="pOverview"></p>
-<h3 class="mt-8 font-display text-lg font-bold" data-i18n="lbl.deliverables">Opgeleverd</h3>
-<ul class="mt-4 space-y-3" id="pDeliverables"></ul>
+<h2 class="font-display text-2xl font-extrabold">{{ __('messages.lbl.overview') }}</h2>
+<p class="mt-4 leading-relaxed text-neutral">{{ $project->overview }}</p>
+<h3 class="mt-8 font-display text-lg font-bold">{{ __('messages.lbl.deliverables') }}</h3>
+<ul class="mt-4 space-y-3">
+@foreach($project->deliverables as $deliverable)
+<li class="flex items-start gap-2">
+<i data-lucide="check" class="mt-1 h-4 w-4 text-crimson2"></i>
+<span>{{ $deliverable }}</span>
+</li>
+@endforeach
+</ul>
 </div>
 <div class="reveal rounded-2xl border border-white/10 bg-charcoal p-6">
-<div class="space-y-5 text-sm" id="pFacts"></div>
-<a class="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-lg bg-crimson px-5 py-3 font-semibold text-white hover:bg-crimson2 hover:crimson-glow" href="#" id="pWa">
-<i class="h-5 w-5" data-lucide="message-circle"></i><span data-i18n="cta.wa">Direct via WhatsApp</span>
+<div class="space-y-5 text-sm">
+<div class="flex items-center gap-3">
+<i data-lucide="map-pin" class="h-5 w-5 text-crimson2"></i>
+<div>
+<div class="text-xs text-neutral">Locatie</div>
+<div class="font-semibold">{{ $project->location }}</div>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<i data-lucide="clock" class="h-5 w-5 text-crimson2"></i>
+<div>
+<div class="text-xs text-neutral">Duur</div>
+<div class="font-semibold">{{ $project->duration }}</div>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<i data-lucide="folder" class="h-5 w-5 text-crimson2"></i>
+<div>
+<div class="text-xs text-neutral">Categorie</div>
+<div class="font-semibold">{{ ucfirst($project->category) }}</div>
+</div>
+</div>
+</div>
+<a class="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-lg bg-crimson px-5 py-3 font-semibold text-white hover:bg-crimson2 hover:crimson-glow" href="https://wa.me/31684954212?text={{ urlencode('Ik heb een vraag over project: ' . $project->title) }}">
+<i class="h-5 w-5" data-lucide="message-circle"></i><span>{{ __('messages.cta.wa') }}</span>
 </a>
 </div>
 </div>
@@ -46,23 +78,45 @@
 <!-- PHOTO ALBUM -->
 <section class="py-10">
 <div class="mx-auto max-w-6xl px-4 sm:px-6">
-<h2 class="reveal font-display text-2xl font-extrabold" data-i18n="lbl.album">Fotoalbum</h2>
-<div class="reveal mt-6 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4" id="pAlbum"></div>
+<h2 class="reveal font-display text-2xl font-extrabold">{{ __('messages.lbl.album') }}</h2>
+<div class="reveal mt-6 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
+@foreach($project->galleryUrls() as $imageUrl)
+<img alt="Project foto" class="aspect-square cursor-pointer rounded-lg object-cover transition hover:opacity-80" onclick="openLB('{{ $imageUrl }}')" src="{{ $imageUrl }}"/>
+@endforeach
+</div>
 </div>
 </section>
 <!-- VIDEOS -->
 <section class="hidden py-10" id="pVideoSection">
 <div class="mx-auto max-w-6xl px-4 sm:px-6">
-<h2 class="reveal font-display text-2xl font-extrabold" data-i18n="lbl.videos">Video's</h2>
-<p class="reveal mt-1 text-xs text-neutral" data-i18n="vid.note">Demovideo — vervang door uw eigen projectvideo.</p>
-<div class="reveal mt-6 grid gap-4 sm:grid-cols-2" id="pVideos"></div>
+<h2 class="reveal font-display text-2xl font-extrabold">{{ __('messages.lbl.videos') }}</h2>
+<p class="reveal mt-1 text-xs text-neutral">{{ __('messages.vid.note') }}</p>
+@if($project->video_url)
+<div class="reveal mt-6 grid gap-4 sm:grid-cols-2">
+<div class="aspect-video overflow-hidden rounded-2xl border border-white/10">
+<iframe allowfullscreen class="h-full w-full" src="{{ $project->video_url }}"></iframe>
+</div>
+</div>
+@endif
 </div>
 </section>
 <!-- OTHER PROJECTS -->
 <section class="py-14">
 <div class="mx-auto max-w-6xl px-4 sm:px-6">
-<h2 class="reveal font-display text-2xl font-extrabold" data-i18n="lbl.other_projects">Andere projecten</h2>
-<div class="reveal mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4" id="pOthers"></div>
+<h2 class="reveal font-display text-2xl font-extrabold">{{ __('messages.lbl.other_projects') }}</h2>
+<div class="reveal mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+@foreach($others as $other)
+<a href="{{ route('project.show', $other) }}" class="group">
+<div class="aspect-[4/3] overflow-hidden rounded-2xl border border-white/10">
+<img alt="{{ $other->title }}" class="h-full w-full object-cover transition group-hover:scale-105" src="{{ $other->heroImageUrl() }}"/>
+</div>
+<div class="mt-3">
+<h3 class="font-display text-base font-bold">{{ $other->title }}</h3>
+<p class="mt-1 text-xs text-neutral">{{ $other->location }}</p>
+</div>
+</a>
+@endforeach
+</div>
 </div>
 </section>
 </main>
@@ -78,6 +132,5 @@
 @endsection
 
 @push('scripts')
-<script src="{{ asset('js/data.js') }}"></script>
-<script src="{{ asset('js/project.js') }}"></script>
+<script src="{{ asset('js/lightbox.js') }}"></script>
 @endpush
