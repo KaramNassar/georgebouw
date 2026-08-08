@@ -85,6 +85,11 @@ class Project extends Model implements HasMedia
         return $query->where('is_active', true);
     }
 
+    public function scopeFeatured($query)
+    {
+        return $query->where('is_featured', true);
+    }
+
     public function scopeOrdered($query)
     {
         return $query->orderBy('sort_order');

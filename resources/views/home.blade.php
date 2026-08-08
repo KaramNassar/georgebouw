@@ -290,7 +290,7 @@
 </div>
 </div>
 <!-- Before / After feature -->
-<div class="reveal mt-12 grid gap-8 lg:grid-cols-2">
+{{-- <div class="reveal mt-12 grid gap-8 lg:grid-cols-2">
 <div>
 <div class="ba-wrap aspect-[4/3] rounded-2xl border border-white/10" id="baBox">
 <img alt="Voor" class="h-full w-full object-cover grayscale" src="https://georgebouw.nl/wp-content/uploads/2026/07/%D8%AD%D9%85%D8%A7%D9%85-%D9%85%D8%B7%D8%A8%D8%AE-%D8%AA%D9%88%D8%A7%D9%84%D9%8A%D8%AA-scaled.jpg"/>
@@ -303,8 +303,8 @@
 <input class="ba-range" id="baRange" max="100" min="0" oninput="setBA(this.value)" type="range" value="50"/>
 </div>
 <p class="mt-4 text-sm text-neutral">{{ __('messages.port.ba.caption') }}</p>
-</div>
-<div class="grid gap-4 sm:grid-cols-2">
+</div> --}}
+<div class="grid gap-4 mt-12 sm:grid-cols-2">
 @foreach($projects as $project)
 <a href="{{ route('project.show', $project) }}" class="reveal group" data-category="{{ $project->category }}">
 <div class="aspect-[4/3] overflow-hidden rounded-2xl border border-white/10">

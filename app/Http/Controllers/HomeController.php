@@ -15,7 +15,7 @@ class HomeController extends Controller
         $locale = app()->getLocale();
 
         $services = Service::query()->active()->ordered()->get();
-        $projects = Project::query()->active()->ordered()->get();
+        $projects = Project::query()->active()->featured()->ordered()->limit(6)->get();
         $reviews = Review::query()->active()->ordered()->get();
         $processSteps = ProcessStep::query()->active()->ordered()->get();
         $settings = SiteSetting::current();
