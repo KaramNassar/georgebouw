@@ -16,10 +16,10 @@
 <div class="grid-bg absolute inset-0 opacity-60"></div>
 <div class="absolute -top-24 right-0 h-80 w-80 rounded-full bg-crimson/15 blur-[120px]"></div>
 <div class="relative mx-auto grid max-w-6xl items-center gap-10 px-4 sm:px-6 lg:grid-cols-2">
-<div class="reveal">
+<div class="reveal text-center lg:text-left">
 <span class="inline-block rounded-full bg-crimson px-3 py-1 text-[11px] font-semibold uppercase tracking-wide">{{ ucfirst($project->category) }}</span>
 <h1 class="mt-4 font-display text-3xl font-black sm:text-5xl">{{ $project->title }}</h1>
-<div class="mt-6 flex flex-wrap gap-x-6 gap-y-2 text-sm text-neutral">
+<div class="mt-6 flex flex-wrap gap-x-6 gap-y-2 text-sm text-neutral justify-center lg:justify-start">
 <span><i data-lucide="map-pin" class="mr-1 h-4 w-4 inline"></i>{{ $project->location }}</span>
 <span><i data-lucide="clock" class="mr-1 h-4 w-4 inline"></i>{{ $project->duration }}</span>
 </div>

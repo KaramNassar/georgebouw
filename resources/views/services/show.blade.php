@@ -15,11 +15,11 @@
 <div class="grid-bg absolute inset-0 opacity-60"></div>
 <div class="absolute -top-24 right-0 h-80 w-80 rounded-full bg-crimson/15 blur-[120px]"></div>
 <div class="relative mx-auto grid max-w-6xl items-center gap-10 px-4 sm:px-6 lg:grid-cols-2">
-<div class="reveal">
+<div class="reveal text-center lg:text-left">
 <span class="grid h-16 w-16 place-items-center rounded-2xl bg-crimson/10 text-crimson2"><i class="h-8 w-8" data-lucide="{{ $service->icon }}"></i></span>
 <h1 class="mt-5 font-display text-3xl font-black sm:text-5xl">{{ $service->name }}</h1>
-<p class="mt-4 max-w-xl text-lg text-neutral">{{ $service->short_description }}</p>
-<div class="mt-7 flex flex-wrap gap-4">
+<p class="mt-4 max-w-xl text-lg text-neutral mx-auto lg:mx-0">{{ $service->short_description }}</p>
+<div class="mt-7 flex flex-wrap gap-4 justify-center lg:justify-start">
 <a class="inline-flex items-center gap-2 rounded-lg bg-crimson px-6 py-3.5 font-semibold text-white hover:bg-crimson2 hover:crimson-glow" href="https://wa.me/31684954212?text={{ urlencode('Ik heb een vraag over dienst: ' . $service->name) }}">
 <i class="h-5 w-5" data-lucide="message-circle"></i><span>{{ __('messages.svd.cta') }}</span>
 </a>

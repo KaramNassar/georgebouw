@@ -38,26 +38,29 @@
         <i data-lucide="calculator" class="h-4 w-4"></i>
         <span>{{ __('messages.nav.quote') }}</span>
       </a>
-      @if($isHome)
-        <!-- Mobile menu button -->
-        <button onclick="toggleMenu()" class="lg:hidden text-white" aria-label="Menu">
-          <i data-lucide="menu" class="h-6 w-6"></i>
-        </button>
-      @endif
+      <!-- Mobile menu button -->
+      <button onclick="toggleMenu()" class="lg:hidden text-white" aria-label="Menu">
+        <i data-lucide="menu" class="h-6 w-6"></i>
+      </button>
     </div>
   </div>
 
-  @if($isHome)
-    <!-- Mobile menu -->
-    <div id="mobileMenu" class="hidden border-t border-white/5 bg-ink lg:hidden">
-      <nav class="flex flex-col px-4 py-3">
-        <a onclick="toggleMenu()" href="#services" class="border-b border-white/5 py-3 text-sm text-neutral">{{ __('messages.nav.services') }}</a>
-        <a onclick="toggleMenu()" href="#assistant" class="border-b border-white/5 py-3 text-sm text-neutral">{{ __('messages.nav.assistant') }}</a>
-        <a onclick="toggleMenu()" href="#portfolio" class="border-b border-white/5 py-3 text-sm text-neutral">{{ __('messages.nav.portfolio') }}</a>
-        <a onclick="toggleMenu()" href="#process" class="border-b border-white/5 py-3 text-sm text-neutral">{{ __('messages.nav.process') }}</a>
-        <a onclick="toggleMenu()" href="#reviews" class="border-b border-white/5 py-3 text-sm text-neutral">{{ __('messages.nav.reviews') }}</a>
-        <a onclick="toggleMenu()" href="#contact" class="py-3 text-sm text-neutral">{{ __('messages.nav.contact') }}</a>
-      </nav>
-    </div>
-  @endif
+  <!-- Mobile menu -->
+  <div id="mobileMenu" class="hidden border-t border-white/5 bg-ink lg:hidden">
+    <nav class="flex flex-col items-center px-4 py-6 space-y-4">
+      @unless($isHome)
+        <a onclick="toggleMenu()" href="{{ url('/') }}" class="w-full max-w-xs text-center py-3 text-sm font-medium text-neutral transition hover:text-crimson2">{{ __('messages.nav.home') }}</a>
+      @endunless
+      <a onclick="toggleMenu()" href="{{ $isHome ? '#services' : url('/').'#services' }}" class="w-full max-w-xs text-center py-3 text-sm font-medium text-neutral transition hover:text-crimson2">{{ __('messages.nav.services') }}</a>
+      @if($isHome)
+        <a onclick="toggleMenu()" href="#assistant" class="w-full max-w-xs text-center py-3 text-sm font-medium text-neutral transition hover:text-crimson2">{{ __('messages.nav.assistant') }}</a>
+      @endif
+      <a onclick="toggleMenu()" href="{{ $isHome ? '#portfolio' : url('/').'#portfolio' }}" class="w-full max-w-xs text-center py-3 text-sm font-medium text-neutral transition hover:text-crimson2">{{ __('messages.nav.portfolio') }}</a>
+      @if($isHome)
+        <a onclick="toggleMenu()" href="#process" class="w-full max-w-xs text-center py-3 text-sm font-medium text-neutral transition hover:text-crimson2">{{ __('messages.nav.process') }}</a>
+        <a onclick="toggleMenu()" href="#reviews" class="w-full max-w-xs text-center py-3 text-sm font-medium text-neutral transition hover:text-crimson2">{{ __('messages.nav.reviews') }}</a>
+      @endif
+      <a onclick="toggleMenu()" href="{{ $isHome ? '#contact' : url('/').'#contact' }}" class="w-full max-w-xs text-center py-3 text-sm font-medium text-neutral transition hover:text-crimson2">{{ __('messages.nav.contact') }}</a>
+    </nav>
+  </div>
 </header>

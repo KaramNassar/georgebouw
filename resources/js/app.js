@@ -11,6 +11,21 @@ function toggleMenu() {
     }
 }
 
+// Make toggleMenu available globally
+window.toggleMenu = toggleMenu;
+
+// Close menu when clicking outside
+document.addEventListener('click', function(event) {
+    const menu = document.getElementById('mobileMenu');
+    const menuButton = document.querySelector('button[aria-label="Menu"]');
+    
+    if (menu && !menu.classList.contains('hidden')) {
+        if (!menu.contains(event.target) && !menuButton.contains(event.target)) {
+            menu.classList.add('hidden');
+        }
+    }
+});
+
 // Scroll reveal animation
 function revealOnScroll() {
     const reveals = document.querySelectorAll('.reveal');
@@ -37,6 +52,9 @@ function setBA(value) {
         baHandle.style.left = value + '%';
     }
 }
+
+// Make setBA globally available
+window.setBA = setBA;
 
 // Wizard navigation
 let currentStep = 1;
@@ -65,6 +83,9 @@ function wizNav(direction) {
     updateWizardSteps();
 }
 
+// Make wizard functions globally available
+window.wizNav = wizNav;
+
 function updateWizardSteps() {
     const stepsContainer = document.getElementById('wizardSteps');
     if (!stepsContainer) return;
@@ -85,6 +106,9 @@ function updateSize(value) {
     }
 }
 
+// Make updateSize globally available
+window.updateSize = updateSize;
+
 // Contact form submission
 function contactSubmit(event) {
     event.preventDefault();
@@ -99,6 +123,63 @@ function contactSubmit(event) {
 
     window.open(`https://wa.me/31684954212?text=${whatsappText}`, '_blank');
 }
+
+// Make contactSubmit globally available
+window.contactSubmit = contactSubmit;
+
+// Wizard submission functions
+function submitWhatsApp() {
+    const name = document.getElementById('leadName').value;
+    const selectedServices = [];
+    document.querySelectorAll('input[data-service]:checked').forEach(cb => {
+        selectedServices.push(cb.value);
+    });
+    
+    const propertyType = document.querySelector('input[name="propertyType"]:checked')?.value || '';
+    const size = document.getElementById('sizeRange')?.value || '';
+    const urgency = document.querySelector('input[name="urgency"]:checked')?.value || '';
+    const material = document.querySelector('input[name="material"]:checked')?.value || '';
+    const budget = document.querySelector('input[name="budget"]:checked')?.value || '';
+    
+    const text = encodeURIComponent(
+        `Projectaanvraag:\n\nDiensten: ${selectedServices.join(', ')}\nType woning: ${propertyType}\nOppervlakte: ${size} m²\nPlanning: ${urgency}\nMateriaal: ${material}\nBudget: ${budget}\nNaam: ${name}`
+    );
+    
+    window.open(`https://wa.me/31684954212?text=${text}`, '_blank');
+}
+
+function submitEmail() {
+    const name = document.getElementById('leadName').value;
+    const selectedServices = [];
+    document.querySelectorAll('input[data-service]:checked').forEach(cb => {
+        selectedServices.push(cb.value);
+    });
+    
+    const propertyType = document.querySelector('input[name="propertyType"]:checked')?.value || '';
+    const size = document.getElementById('sizeRange')?.value || '';
+    const urgency = document.querySelector('input[name="urgency"]:checked')?.value || '';
+    const material = document.querySelector('input[name="material"]:checked')?.value || '';
+    const budget = document.querySelector('input[name="budget"]:checked')?.value || '';
+    
+    const subject = encodeURIComponent('Projectaanvraag - GEORGE BOUW');
+    const body = encodeURIComponent(
+        `Naam: ${name}\n\nDiensten: ${selectedServices.join(', ')}\nType woning: ${propertyType}\nOppervlakte: ${size} m²\nPlanning: ${urgency}\nMateriaal: ${material}\nBudget: ${budget}`
+    );
+    
+    window.location.href = `mailto:info@georgebouw.nl?subject=${subject}&body=${body}`;
+}
+
+function onUpload(input) {
+    const label = document.getElementById('uploadLabel');
+    if (input.files.length > 0) {
+        label.textContent = `${input.files.length} foto(s) geselecteerd`;
+    }
+}
+
+// Make wizard submission functions globally available
+window.submitWhatsApp = submitWhatsApp;
+window.submitEmail = submitEmail;
+window.onUpload = onUpload;
 
 // Portfolio filtering
 document.addEventListener('DOMContentLoaded', function() {

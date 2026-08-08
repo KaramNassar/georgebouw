@@ -35,7 +35,7 @@
 <div class="absolute bottom-0 left-1/4 h-72 w-72 rounded-full bg-crimson/10 blur-[120px]"></div>
 <div class="relative mx-auto max-w-7xl px-4 sm:px-6">
 <div class="grid items-center gap-12 lg:grid-cols-2">
-<div class="reveal">
+<div class="reveal text-center lg:text-left">
 <div class="mb-6 inline-flex items-center gap-2 rounded-full border border-white/10 bg-charcoal px-4 py-1.5 text-xs font-semibold text-neutral">
 <span class="h-2 w-2 animate-pulse rounded-full bg-crimson2"></span>
 <span>{{ __('messages.hero.badge') }}</span>
@@ -44,8 +44,8 @@
 <span>{{ __('messages.hero.title1') }}</span><br/>
 <span class="text-crimson2 text-glow">{{ __('messages.hero.title2') }}</span>
 </h1>
-<p class="mt-6 max-w-xl text-lg text-neutral">{{ __('messages.hero.sub') }}</p>
-<div class="mt-8 flex flex-wrap gap-4">
+<p class="mt-6 max-w-xl text-lg text-neutral mx-auto lg:mx-0">{{ __('messages.hero.sub') }}</p>
+<div class="mt-8 flex flex-wrap gap-4 justify-center lg:justify-start">
 <a class="inline-flex items-center gap-2 rounded-lg bg-crimson px-6 py-3.5 font-semibold text-white transition hover:bg-crimson2 hover:crimson-glow" href="#assistant">
 <i class="h-5 w-5" data-lucide="calculator"></i>
 <span>{{ __('messages.hero.cta1') }}</span>
@@ -55,7 +55,7 @@
 <span>{{ __('messages.hero.cta2') }}</span>
 </a>
 </div>
-<div class="mt-10 flex flex-wrap items-center gap-x-8 gap-y-3 text-sm text-neutral">
+<div class="mt-10 flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-sm text-neutral lg:justify-start">
 <span class="inline-flex items-center gap-2"><i class="h-4 w-4 text-crimson2" data-lucide="shield-check"></i><span>{{ __('messages.hero.trust1') }}</span></span>
 <span class="inline-flex items-center gap-2"><i class="h-4 w-4 text-crimson2" data-lucide="badge-check"></i><span>{{ __('messages.hero.trust2') }}</span></span>
 <span class="inline-flex items-center gap-2"><i class="h-4 w-4 text-crimson2" data-lucide="wallet"></i><span>{{ __('messages.hero.trust3') }}</span></span>
@@ -89,7 +89,7 @@
 <!-- ============ SERVICES ============ -->
 <section class="border-t border-white/5 py-20 sm:py-28" id="services">
 <div class="mx-auto max-w-7xl px-4 sm:px-6">
-<div class="reveal max-w-2xl">
+<div class="reveal max-w-2xl text-center lg:text-left">
 <p class="text-xs font-semibold uppercase tracking-[0.3em] text-crimson2">{{ __('messages.services.eyebrow') }}</p>
 <h2 class="mt-3 font-display text-3xl font-extrabold sm:text-4xl">{{ __('messages.services.title') }}</h2>
 <p class="mt-4 text-neutral">{{ __('messages.services.sub') }}</p>
@@ -278,7 +278,7 @@
 <section class="border-t border-white/5 py-20 sm:py-28" id="portfolio">
 <div class="mx-auto max-w-7xl px-4 sm:px-6">
 <div class="reveal flex flex-col justify-between gap-6 sm:flex-row sm:items-end">
-<div class="max-w-2xl">
+<div class="max-w-2xl text-center lg:text-left">
 <p class="text-xs font-semibold uppercase tracking-[0.3em] text-crimson2">{{ __('messages.port.eyebrow') }}</p>
 <h2 class="mt-3 font-display text-3xl font-extrabold sm:text-4xl">{{ __('messages.port.title') }}</h2>
 </div>
@@ -325,7 +325,7 @@
 <section class="relative border-t border-white/5 py-20 sm:py-28" id="process">
 <div class="grid-bg absolute inset-0 opacity-60"></div>
 <div class="relative mx-auto max-w-7xl px-4 sm:px-6">
-<div class="reveal max-w-2xl">
+<div class="reveal max-w-2xl text-center lg:text-left">
 <p class="text-xs font-semibold uppercase tracking-[0.3em] text-crimson2">{{ __('messages.proc.eyebrow') }}</p>
 <h2 class="mt-3 font-display text-3xl font-extrabold sm:text-4xl">{{ __('messages.proc.title') }}</h2>
 </div>
@@ -345,7 +345,7 @@
 <!-- ============ REVIEWS ============ -->
 <section class="border-t border-white/5 py-20 sm:py-28" id="reviews">
 <div class="mx-auto max-w-7xl px-4 sm:px-6">
-<div class="reveal max-w-2xl">
+<div class="reveal max-w-2xl text-center lg:text-left">
 <p class="text-xs font-semibold uppercase tracking-[0.3em] text-crimson2">{{ __('messages.rev.eyebrow') }}</p>
 <h2 class="mt-3 font-display text-3xl font-extrabold sm:text-4xl">{{ __('messages.rev.title') }}</h2>
 </div>
@@ -377,10 +377,10 @@
 <div class="absolute left-1/4 top-0 h-72 w-72 rounded-full bg-crimson/10 blur-[120px]"></div>
 <div class="relative mx-auto max-w-7xl px-4 sm:px-6">
 <div class="grid gap-12 lg:grid-cols-2">
-<div class="reveal">
+<div class="reveal text-center lg:text-left">
 <p class="text-xs font-semibold uppercase tracking-[0.3em] text-crimson2">{{ __('messages.con.eyebrow') }}</p>
 <h2 class="mt-3 font-display text-3xl font-extrabold sm:text-4xl">{{ __('messages.con.title') }}</h2>
-<p class="mt-4 max-w-md text-neutral">{{ __('messages.con.sub') }}</p>
+<p class="mt-4 max-w-md text-neutral mx-auto lg:mx-0">{{ __('messages.con.sub') }}</p>
 <div class="mt-8 space-y-4">
 <a class="flex items-center gap-4 rounded-xl border border-white/10 bg-charcoal p-4 transition hover:border-crimson/50" href="https://wa.me/31684954212">
 <span class="grid h-11 w-11 place-items-center rounded-lg bg-crimson/15 text-crimson2"><i class="h-5 w-5" data-lucide="message-circle"></i></span>
@@ -395,7 +395,7 @@
 <span><span class="block text-sm font-semibold">Website</span><span class="block text-sm text-neutral">georgebouw.nl</span></span>
 </a>
 </div>
-<div class="mt-8">
+<div class="mt-8 flex flex-col items-center lg:items-start">
 <p class="mb-3 text-xs font-semibold uppercase tracking-[0.25em] text-neutral">{{ __('messages.con.follow') }}</p>
 <div class="flex gap-3">
 <a aria-label="TikTok" class="grid h-11 w-11 place-items-center rounded-lg border border-white/10 bg-charcoal text-neutral transition hover:border-crimson/50 hover:text-crimson2" href="#"><i class="h-5 w-5" data-lucide="music-2"></i></a>
