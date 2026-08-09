@@ -17,8 +17,8 @@
 <div class="relative mx-auto grid max-w-6xl items-center gap-10 px-4 sm:px-6 lg:grid-cols-2">
 <div class="reveal text-center lg:text-left">
 <span class="grid h-16 w-16 place-items-center rounded-2xl bg-crimson/10 text-crimson2"><i class="h-8 w-8" data-lucide="{{ $service->icon }}"></i></span>
-<h1 class="mt-5 font-display text-3xl font-black sm:text-5xl">{{ $service->name }}</h1>
-<p class="mt-4 max-w-xl text-lg text-neutral mx-auto lg:mx-0">{{ $service->short_description }}</p>
+<h1 class="mt-5 font-display text-3xl font-black sm:text-5xl">{{ $service->getTranslation('name', app()->getLocale()) }}</h1>
+<p class="mt-4 max-w-xl text-lg text-neutral mx-auto lg:mx-0">{{ $service->getTranslation('short_description', app()->getLocale()) }}</p>
 <div class="mt-7 flex flex-wrap gap-4 justify-center lg:justify-start">
 <a class="inline-flex items-center gap-2 rounded-lg bg-crimson px-6 py-3.5 font-semibold text-white hover:bg-crimson2 hover:crimson-glow" href="https://wa.me/31684954212?text={{ urlencode('Ik heb een vraag over dienst: ' . $service->name) }}">
 <i class="h-5 w-5" data-lucide="message-circle"></i><span>{{ __('messages.svd.cta') }}</span>
@@ -99,8 +99,8 @@
 <img alt="{{ $other->name }}" class="h-full w-full object-cover transition group-hover:scale-105" src="{{ $other->heroImageUrl() }}"/>
 </div>
 <div class="mt-3">
-<h3 class="font-display text-base font-bold">{{ $other->name }}</h3>
-<p class="mt-1 text-xs text-neutral">{{ $other->short_description }}</p>
+<h3 class="font-display text-base font-bold">{{ $other->getTranslation('name', app()->getLocale()) }}</h3>
+<p class="mt-1 text-xs text-neutral">{{ $other->getTranslation('short_description', app()->getLocale()) }}</p>
 </div>
 </a>
 @endforeach
@@ -120,5 +120,5 @@
 @endsection
 
 @push('scripts')
-<script src="{{ asset('js/lightbox.js') }}"></script>
+@vite(['resources/js/lightbox.js'])
 @endpush

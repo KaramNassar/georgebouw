@@ -17,8 +17,8 @@
 <div class="absolute -top-24 right-0 h-80 w-80 rounded-full bg-crimson/15 blur-[120px]"></div>
 <div class="relative mx-auto grid max-w-6xl items-center gap-10 px-4 sm:px-6 lg:grid-cols-2">
 <div class="reveal text-center lg:text-left">
-<span class="inline-block rounded-full bg-crimson px-3 py-1 text-[11px] font-semibold uppercase tracking-wide">{{ ucfirst($project->category) }}</span>
-<h1 class="mt-4 font-display text-3xl font-black sm:text-5xl">{{ $project->title }}</h1>
+<span class="inline-block rounded-full bg-crimson px-3 py-1 text-[11px] font-semibold uppercase tracking-wide">{{ ucfirst($project->category->getTranslation('name', app()->getLocale())) }}</span>
+<h1 class="mt-4 font-display text-3xl font-black sm:text-5xl">{{ $project->getTranslation('title', app()->getLocale()) }}</h1>
 <div class="mt-6 flex flex-wrap gap-x-6 gap-y-2 text-sm text-neutral justify-center lg:justify-start">
 <span><i data-lucide="map-pin" class="mr-1 h-4 w-4 inline"></i>{{ $project->location }}</span>
 <span><i data-lucide="clock" class="mr-1 h-4 w-4 inline"></i>{{ $project->duration }}</span>
@@ -34,10 +34,10 @@
 <div class="mx-auto grid max-w-6xl gap-8 px-4 sm:px-6 lg:grid-cols-3">
 <div class="reveal lg:col-span-2">
 <h2 class="font-display text-2xl font-extrabold">{{ __('messages.lbl.overview') }}</h2>
-<p class="mt-4 leading-relaxed text-neutral">{{ $project->overview }}</p>
+<p class="mt-4 leading-relaxed text-neutral">{{ $project->getTranslation('overview', app()->getLocale()) }}</p>
 <h3 class="mt-8 font-display text-lg font-bold">{{ __('messages.lbl.deliverables') }}</h3>
 <ul class="mt-4 space-y-3">
-@foreach($project->deliverables as $deliverable)
+@foreach($project->getTranslation('deliverables', app()->getLocale()) as $deliverable)
 <li class="flex items-start gap-2">
 <i data-lucide="check" class="mt-1 h-4 w-4 text-crimson2"></i>
 <span>{{ $deliverable }}</span>
@@ -65,7 +65,7 @@
 <i data-lucide="folder" class="h-5 w-5 text-crimson2"></i>
 <div>
 <div class="text-xs text-neutral">Categorie</div>
-<div class="font-semibold">{{ ucfirst($project->category) }}</div>
+<div class="font-semibold">{{ ucfirst($project->category->getTranslation('name', app()->getLocale())) }}</div>
 </div>
 </div>
 </div>
@@ -111,7 +111,7 @@
 <img alt="{{ $other->title }}" class="h-full w-full object-cover transition group-hover:scale-105" src="{{ $other->heroImageUrl() }}"/>
 </div>
 <div class="mt-3">
-<h3 class="font-display text-base font-bold">{{ $other->title }}</h3>
+<h3 class="font-display text-base font-bold">{{ $other->getTranslation('title', app()->getLocale()) }}</h3>
 <p class="mt-1 text-xs text-neutral">{{ $other->location }}</p>
 </div>
 </a>
@@ -132,5 +132,5 @@
 @endsection
 
 @push('scripts')
-<script src="{{ asset('js/lightbox.js') }}"></script>
+@vite(['resources/js/lightbox.js'])
 @endpush
