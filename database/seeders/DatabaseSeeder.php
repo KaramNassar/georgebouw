@@ -31,7 +31,7 @@ class DatabaseSeeder extends Seeder
 
         $categories = [
             [
-                'slug' => 'badkamers',
+                'slug' => 'bathrooms',
                 'name' => [
                     'nl' => 'Badkamers',
                     'en' => 'Bathrooms',
@@ -39,7 +39,7 @@ class DatabaseSeeder extends Seeder
                 'sort_order' => 1,
             ],
             [
-                'slug' => 'keukens',
+                'slug' => 'kitchens',
                 'name' => [
                     'nl' => 'Keukens',
                     'en' => 'Kitchens',
@@ -47,7 +47,7 @@ class DatabaseSeeder extends Seeder
                 'sort_order' => 2,
             ],
             [
-                'slug' => 'elektra',
+                'slug' => 'electrical',
                 'name' => [
                     'nl' => 'Elektra',
                     'en' => 'Electrical',
@@ -55,7 +55,7 @@ class DatabaseSeeder extends Seeder
                 'sort_order' => 3,
             ],
             [
-                'slug' => 'renovatie',
+                'slug' => 'renovations',
                 'name' => [
                     'nl' => 'Renovatie',
                     'en' => 'Renovations',
@@ -63,7 +63,7 @@ class DatabaseSeeder extends Seeder
                 'sort_order' => 4,
             ],
             [
-                'slug' => 'loodgieter',
+                'slug' => 'plumbing',
                 'name' => [
                     'nl' => 'Loodgieter',
                     'en' => 'Plumbing',
@@ -71,7 +71,7 @@ class DatabaseSeeder extends Seeder
                 'sort_order' => 5,
             ],
             [
-                'slug' => 'stucwerk',
+                'slug' => 'plastering',
                 'name' => [
                     'nl' => 'Stucwerk',
                     'en' => 'Plastering',
@@ -79,7 +79,7 @@ class DatabaseSeeder extends Seeder
                 'sort_order' => 6,
             ],
             [
-                'slug' => 'tegelwerk',
+                'slug' => 'tiling',
                 'name' => [
                     'nl' => 'Tegelwerk',
                     'en' => 'Tiling',
@@ -101,7 +101,8 @@ class DatabaseSeeder extends Seeder
 
         $services = [
             [
-                'slug' => 'bathkitchen', 'icon' => 'bath', 'base_price' => 9500, 'price_per_m2' => 900,
+                'slug' => 'bathroom-toilet-kitchen',
+                'icon' => 'bath', 'base_price' => 9500, 'price_per_m2' => 900,
                 'name' => ['nl' => 'Badkamer, Toilet & Keuken', 'en' => 'Bathroom, Toilet & Kitchen'],
                 'short_description' => [
                     'nl' => 'Complete renovatie van keukens, badkamers en toilet van A tot Z, met topkwaliteit en oog voor detail.',
@@ -117,7 +118,8 @@ class DatabaseSeeder extends Seeder
                 ],
             ],
             [
-                'slug' => 'electrical', 'icon' => 'zap', 'base_price' => 800, 'price_per_m2' => 60,
+                'slug' => 'electrical-fuse-boxes',
+                'icon' => 'zap', 'base_price' => 800, 'price_per_m2' => 60,
                 'name' => ['nl' => 'Elektra & Groepenkasten', 'en' => 'Electrical & Fuse Boxes'],
                 'short_description' => [
                     'nl' => 'Veilige installatie en moderne elektrotechniek volgens de strengste veiligheidsnormen.',
@@ -133,7 +135,8 @@ class DatabaseSeeder extends Seeder
                 ],
             ],
             [
-                'slug' => 'plumbing', 'icon' => 'droplets', 'base_price' => 1200, 'price_per_m2' => 80,
+                'slug' => 'plumbing-fixtures',
+                'icon' => 'droplets', 'base_price' => 1200, 'price_per_m2' => 80,
                 'name' => ['nl' => 'Loodgieterswerk & Sanitair', 'en' => 'Plumbing & Fixtures'],
                 'short_description' => [
                     'nl' => 'Betrouwbaar leidingwerk en waterinstallaties, geheel lekvrij en duurzaam aangelegd.',
@@ -149,7 +152,8 @@ class DatabaseSeeder extends Seeder
                 ],
             ],
             [
-                'slug' => 'plaster', 'icon' => 'paint-roller', 'base_price' => 600, 'price_per_m2' => 35,
+                'slug' => 'plastering-painting',
+                'icon' => 'paint-roller', 'base_price' => 600, 'price_per_m2' => 35,
                 'name' => ['nl' => 'Stuc- & Schilderwerk', 'en' => 'Plastering & Painting'],
                 'short_description' => [
                     'nl' => 'Strak stukwerk en vakkundig schilderwerk voor een luxe en verzorgde afwerking.',
@@ -165,7 +169,8 @@ class DatabaseSeeder extends Seeder
                 ],
             ],
             [
-                'slug' => 'carpentry', 'icon' => 'ruler', 'base_price' => 1500, 'price_per_m2' => 120,
+                'slug' => 'carpentry-renovation',
+                'icon' => 'ruler', 'base_price' => 1500, 'price_per_m2' => 120,
                 'name' => ['nl' => 'Timmer- & Renovatiewerk', 'en' => 'Carpentry & Renovation'],
                 'short_description' => [
                     'nl' => 'Maatwerk, grondige renovatie en vakkundig timmerwerk dat aansluit bij uw wensen.',
@@ -181,7 +186,8 @@ class DatabaseSeeder extends Seeder
                 ],
             ],
             [
-                'slug' => 'tiling', 'icon' => 'grid-3x3', 'base_price' => 900, 'price_per_m2' => 70,
+                'slug' => 'tiling',
+                'icon' => 'grid-3x3', 'base_price' => 900, 'price_per_m2' => 70,
                 'name' => ['nl' => 'Tegelwerk', 'en' => 'Tiling'],
                 'short_description' => [
                     'nl' => 'Vakkundig wand- en vloertegelwerk — de perfecte, waterdichte basis met verzorgde afwerking.',
@@ -197,7 +203,8 @@ class DatabaseSeeder extends Seeder
                 ],
             ],
             [
-                'slug' => 'demolition', 'icon' => 'hammer', 'base_price' => 700, 'price_per_m2' => 45,
+                'slug' => 'demolition',
+                'icon' => 'hammer', 'base_price' => 700, 'price_per_m2' => 45,
                 'name' => ['nl' => 'Sloopwerk', 'en' => 'Demolition'],
                 'short_description' => [
                     'nl' => 'Vakkundige en nette sloop als solide voorbereiding op elke renovatie.',
@@ -218,6 +225,7 @@ class DatabaseSeeder extends Seeder
             Service::query()->updateOrCreate(
                 ['slug' => $data['slug']],
                 [
+                    'slug' => $data['slug'],
                     'icon' => $data['icon'],
                     'base_price' => $data['base_price'],
                     'price_per_m2' => $data['price_per_m2'],
@@ -233,7 +241,8 @@ class DatabaseSeeder extends Seeder
 
         $projects = [
             [
-                'slug' => 'badkamer-toilet-rotterdam', 'category_id' => 1, 'location' => 'Rotterdam', 'duration' => '3 weken',
+                'slug' => 'bathroom-toilet-renovation-rotterdam',
+                'category_id' => 1, 'location' => 'Rotterdam', 'duration' => '3 weken',
                 'title' => ['nl' => 'Badkamer & Toilet Renovatie', 'en' => 'Bathroom & Toilet Renovation'],
                 'scope_summary' => ['nl' => 'Tegelwerk, sanitair, verlichting', 'en' => 'Tiling, fixtures, lighting'],
                 'overview' => [
@@ -247,7 +256,8 @@ class DatabaseSeeder extends Seeder
                 'is_featured' => true,
             ],
             [
-                'slug' => 'groepenkast-bedrading-den-haag', 'category_id' => 2, 'location' => 'Den Haag', 'duration' => '4 dagen',
+                'slug' => 'fuse-box-wiring-den-haag',
+                'category_id' => 2, 'location' => 'Den Haag', 'duration' => '4 dagen',
                 'title' => ['nl' => 'Groepenkast & Bedrading', 'en' => 'Fuse Box & Wiring'],
                 'scope_summary' => ['nl' => 'Nieuwe groepenkast, keuring', 'en' => 'New fuse box, inspection'],
                 'overview' => [
@@ -261,7 +271,8 @@ class DatabaseSeeder extends Seeder
                 'is_featured' => false,
             ],
             [
-                'slug' => 'volledige-woningrenovatie-delft', 'category_id' => 3, 'location' => 'Delft', 'duration' => '8 weken',
+                'slug' => 'full-home-renovation-delft',
+                'category_id' => 3, 'location' => 'Delft', 'duration' => '8 weken',
                 'title' => ['nl' => 'Volledige Woningrenovatie', 'en' => 'Full Home Renovation'],
                 'scope_summary' => ['nl' => 'Timmerwerk, stucwerk, afwerking', 'en' => 'Carpentry, plastering, finishing'],
                 'overview' => [
@@ -275,7 +286,8 @@ class DatabaseSeeder extends Seeder
                 'is_featured' => true,
             ],
             [
-                'slug' => 'keuken-sanitair-schiedam', 'category_id' => 4, 'location' => 'Schiedam', 'duration' => '2 weken',
+                'slug' => 'kitchen-fixtures-schiedam',
+                'category_id' => 4, 'location' => 'Schiedam', 'duration' => '2 weken',
                 'title' => ['nl' => 'Keuken & Sanitair', 'en' => 'Kitchen & Fixtures'],
                 'scope_summary' => ['nl' => 'Leidingwerk, montage, tegels', 'en' => 'Plumbing, installation, tiling'],
                 'overview' => [
@@ -289,7 +301,8 @@ class DatabaseSeeder extends Seeder
                 'is_featured' => false,
             ],
             [
-                'slug' => 'stuc-schilderwerk-rotterdam', 'category_id' => 5, 'location' => 'Rotterdam', 'duration' => '1 week',
+                'slug' => 'plastering-painting-rotterdam',
+                'category_id' => 5, 'location' => 'Rotterdam', 'duration' => '1 week',
                 'title' => ['nl' => 'Stuc- & Schilderwerk', 'en' => 'Plastering & Painting'],
                 'scope_summary' => ['nl' => 'Stucwerk, schilderwerk', 'en' => 'Plastering, painting'],
                 'overview' => [
@@ -303,7 +316,8 @@ class DatabaseSeeder extends Seeder
                 'is_featured' => false,
             ],
             [
-                'slug' => 'tegelwerk-vlaardingen', 'category_id' => 6, 'location' => 'Vlaardingen', 'duration' => '5 dagen',
+                'slug' => 'floor-wall-tiling-vlaardingen',
+                'category_id' => 6, 'location' => 'Vlaardingen', 'duration' => '5 dagen',
                 'title' => ['nl' => 'Tegelwerk Vloer & Wand', 'en' => 'Floor & Wall Tiling'],
                 'scope_summary' => ['nl' => 'Vloer- en wandtegels', 'en' => 'Floor and wall tiles'],
                 'overview' => [
@@ -322,6 +336,7 @@ class DatabaseSeeder extends Seeder
             Project::query()->updateOrCreate(
                 ['slug' => $data['slug']],
                 [
+                    'slug' => $data['slug'],
                     'category_id' => $data['category_id'],
                     'location' => $data['location'],
                     'duration' => $data['duration'],
@@ -337,16 +352,17 @@ class DatabaseSeeder extends Seeder
         }
 
         $processSteps = [
-            ['icon' => 'handshake', 'title' => ['nl' => 'Kennismaking', 'en' => 'Introduction'], 'description' => ['nl' => 'Gratis inspectie en advies op locatie.', 'en' => 'Free on-site inspection and advice.']],
-            ['icon' => 'file-text', 'title' => ['nl' => 'Offerte', 'en' => 'Quote'], 'description' => ['nl' => 'Heldere, concurrerende prijs zonder verrassingen.', 'en' => 'A clear, competitive price with no surprises.']],
-            ['icon' => 'hard-hat', 'title' => ['nl' => 'Uitvoering', 'en' => 'Execution'], 'description' => ['nl' => 'Vakkundig, netjes en op tijd — afspraak is afspraak.', 'en' => 'Skilled, tidy and on time — a deal is a deal.']],
-            ['icon' => 'check-circle-2', 'title' => ['nl' => 'Oplevering', 'en' => 'Hand-over'], 'description' => ['nl' => 'Perfecte afwerking en nazorg.', 'en' => 'A perfect finish and aftercare.']],
+            ['slug' => 'introduction', 'icon' => 'handshake', 'title' => ['nl' => 'Kennismaking', 'en' => 'Introduction'], 'description' => ['nl' => 'Gratis inspectie en advies op locatie.', 'en' => 'Free on-site inspection and advice.']],
+            ['slug' => 'quote', 'icon' => 'file-text', 'title' => ['nl' => 'Offerte', 'en' => 'Quote'], 'description' => ['nl' => 'Heldere, concurrerende prijs zonder verrassingen.', 'en' => 'A clear, competitive price with no surprises.']],
+            ['slug' => 'execution', 'icon' => 'hard-hat', 'title' => ['nl' => 'Uitvoering', 'en' => 'Execution'], 'description' => ['nl' => 'Vakkundig, netjes en op tijd — afspraak is afspraak.', 'en' => 'Skilled, tidy and on time — a deal is a deal.']],
+            ['slug' => 'hand-over', 'icon' => 'check-circle-2', 'title' => ['nl' => 'Oplevering', 'en' => 'Hand-over'], 'description' => ['nl' => 'Perfecte afwerking en nazorg.', 'en' => 'A perfect finish and aftercare.']],
         ];
 
         foreach ($processSteps as $index => $data) {
             ProcessStep::query()->updateOrCreate(
-                ['sort_order' => $index],
+                ['slug' => $data['slug']],
                 [
+                    'slug' => $data['slug'],
                     'icon' => $data['icon'],
                     'title' => $data['title'],
                     'description' => $data['description'],
@@ -356,15 +372,17 @@ class DatabaseSeeder extends Seeder
         }
 
         $reviews = [
-            ['client_name' => 'Familie de Vries', 'service_label' => ['nl' => 'Badkamerrenovatie', 'en' => 'Bathroom renovation'], 'quote' => ['nl' => 'Strakke planning, top afwerking en altijd bereikbaar. Precies wat beloofd was.', 'en' => 'Tight schedule, great finish and always reachable. Exactly what was promised.'], 'rating' => 5],
-            ['client_name' => 'M. Jansen', 'service_label' => ['nl' => 'Elektra', 'en' => 'Electrical'], 'quote' => ['nl' => 'Snel, netjes en volgens de regels. Aanrader voor iedereen die zijn meterkast wil vervangen.', 'en' => 'Fast, tidy and to code. Recommended for anyone replacing their fuse box.'], 'rating' => 5],
-            ['client_name' => 'R. Bakker', 'service_label' => ['nl' => 'Volledige renovatie', 'en' => 'Full renovation'], 'quote' => ['nl' => 'Van sloop tot oplevering één aanspreekpunt. Dat scheelt enorm veel stress.', 'en' => 'One point of contact from demolition to hand-over. Saves an enormous amount of stress.'], 'rating' => 5],
+            ['slug' => 'familie-de-vries-bathroom-renovation', 'client_name' => 'Familie de Vries', 'service_label' => ['nl' => 'Badkamerrenovatie', 'en' => 'Bathroom renovation'], 'quote' => ['nl' => 'Strakke planning, top afwerking en altijd bereikbaar. Precies wat beloofd was.', 'en' => 'Tight schedule, great finish and always reachable. Exactly what was promised.'], 'rating' => 5],
+            ['slug' => 'm-jansen-electrical', 'client_name' => 'M. Jansen', 'service_label' => ['nl' => 'Elektra', 'en' => 'Electrical'], 'quote' => ['nl' => 'Snel, netjes en volgens de regels. Aanrader voor iedereen die zijn meterkast wil vervangen.', 'en' => 'Fast, tidy and to code. Recommended for anyone replacing their fuse box.'], 'rating' => 5],
+            ['slug' => 'r-bakker-full-renovation', 'client_name' => 'R. Bakker', 'service_label' => ['nl' => 'Volledige renovatie', 'en' => 'Full renovation'], 'quote' => ['nl' => 'Van sloop tot oplevering één aanspreekpunt. Dat scheelt enorm veel stress.', 'en' => 'One point of contact from demolition to hand-over. Saves an enormous amount of stress.'], 'rating' => 5],
         ];
 
         foreach ($reviews as $index => $data) {
             Review::query()->updateOrCreate(
-                ['client_name' => $data['client_name']],
+                ['slug' => $data['slug']],
                 [
+                    'slug' => $data['slug'],
+                    'client_name' => $data['client_name'],
                     'service_label' => $data['service_label'],
                     'quote' => $data['quote'],
                     'rating' => $data['rating'],

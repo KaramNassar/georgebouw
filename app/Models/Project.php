@@ -25,7 +25,6 @@ class Project extends Model implements HasMedia
     ];
 
     protected $fillable = [
-        'slug',
         'category_id',
         'location',
         'duration',

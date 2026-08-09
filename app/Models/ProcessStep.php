@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 use Spatie\Translatable\HasTranslations;
 
 class ProcessStep extends Model
@@ -27,6 +28,17 @@ class ProcessStep extends Model
     protected $casts = [
         'is_active' => 'boolean',
     ];
+
+    protected static function booted(): void
+    {
+        static::saving(function (ProcessStep $processStep) {
+            if (blank($processStep->slug) && $processStep->isDirty('title')) {
+                $processStep->slug = Str::slug(
+                    $processStep->getTranslation('title', 'en') ?: $processStep->getTranslation('title', 'nl')
+                );
+            }
+        });
+    }
 
     public function scopeActive($query)
     {

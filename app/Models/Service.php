@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
@@ -26,7 +27,6 @@ class Service extends Model implements HasMedia
     ];
 
     protected $fillable = [
-        'slug',
         'icon',
         'base_price',
         'price_per_m2',
@@ -50,7 +50,7 @@ class Service extends Model implements HasMedia
     {
         static::saving(function (Service $service) {
             if (blank($service->slug) && $service->isDirty('name')) {
-                $service->slug = \Illuminate\Support\Str::slug($service->getTranslation('name', 'en') ?: $service->getTranslation('name', 'nl'));
+                $service->slug = Str::slug($service->getTranslation('name', 'en') ?: $service->getTranslation('name', 'nl'));
             }
         });
     }

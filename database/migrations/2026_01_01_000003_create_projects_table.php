@@ -10,7 +10,7 @@ return new class extends Migration
     {
         Schema::create('projects', function (Blueprint $table) {
             $table->id();
-            $table->string('slug')->unique();
+            $table->string('slug')->nullable()->unique();
             $table->string('location')->nullable();
             $table->string('duration')->nullable();
             $table->foreignId('category_id')->nullable()->after('slug')->constrained()->nullOnDelete();

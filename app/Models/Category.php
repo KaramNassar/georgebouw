@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Str;
 use Spatie\Translatable\HasTranslations;
 
 class Category extends Model
@@ -15,7 +16,6 @@ class Category extends Model
     ];
 
     protected $fillable = [
-        'slug',
         'name',
         'is_active',
         'sort_order',
@@ -24,6 +24,22 @@ class Category extends Model
     protected $casts = [
         'is_active' => 'boolean',
     ];
+
+    protected static function booted(): void
+    {
+        static::saving(function (Category $category) {
+            if (blank($category->slug) && $category->isDirty('name')) {
+                $category->slug = Str::slug(
+                    $category->getTranslation('name', 'en') ?: $category->getTranslation('name', 'nl')
+                );
+            }
+        });
+    }
+
+    public function getRouteKeyName(): string
+    {
+        return 'slug';
+    }
 
     public function projects(): HasMany
     {

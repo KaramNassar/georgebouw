@@ -4,13 +4,11 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\ServiceResource\Pages;
 use App\Models\Service;
-use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
-use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
-use LaraZeus\SpatieTranslatable\Resources\Concerns\Translatable;
 use Filament\Resources\Resource;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
@@ -19,6 +17,7 @@ use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use LaraZeus\SpatieTranslatable\Resources\Concerns\Translatable;
 
 class ServiceResource extends Resource
 {
@@ -47,11 +46,6 @@ class ServiceResource extends Resource
                         ->required()
                         ->maxLength(120)
                         ->columnSpan(2),
-                    TextInput::make('slug')
-                        ->required()
-                        ->unique(ignoreRecord: true)
-                        ->maxLength(120)
-                        ->helperText('Used in URLs, e.g. /service/bathkitchen. Leave as-is once published.'),
                     TextInput::make('icon')
                         ->required()
                         ->maxLength(60)

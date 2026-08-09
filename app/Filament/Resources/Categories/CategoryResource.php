@@ -48,10 +48,6 @@ class CategoryResource extends Resource
                         TextInput::make('name')
                             ->required()
                             ->maxLength(150),
-                        TextInput::make('slug')
-                            ->required()
-                            ->unique(ignoreRecord: true)
-                            ->maxLength(170),
                         Toggle::make('is_active')->default(true),
                         TextInput::make('sort_order')
                             ->numeric()

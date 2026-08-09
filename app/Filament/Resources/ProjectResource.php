@@ -48,10 +48,6 @@ class ProjectResource extends Resource
                         ->required()
                         ->maxLength(150)
                         ->columnSpan(2),
-                    TextInput::make('slug')
-                        ->required()
-                        ->unique(ignoreRecord: true)
-                        ->maxLength(170),
                     Select::make('category_id')
                         ->relationship('category', 'name')
                         ->searchable()

@@ -10,7 +10,7 @@ return new class extends Migration
     {
         Schema::create('services', function (Blueprint $table) {
             $table->id();
-            $table->string('slug')->unique();
+            $table->string('slug')->nullable()->unique();
             $table->string('icon')->default('hammer'); // lucide icon name
             $table->unsignedInteger('base_price')->default(0);   // € starting price
             $table->unsignedInteger('price_per_m2')->default(0); // € per m² used by the estimator
