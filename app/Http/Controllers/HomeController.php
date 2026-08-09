@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Project;
+use App\Models\Category;
 use App\Models\ProcessStep;
+use App\Models\Project;
 use App\Models\Review;
 use App\Models\Service;
 use App\Models\SiteSetting;
@@ -15,7 +16,8 @@ class HomeController extends Controller
         $locale = app()->getLocale();
 
         $services = Service::query()->active()->ordered()->get();
-        $projects = Project::query()->active()->featured()->ordered()->limit(6)->get();
+        $categories = Category::query()->active()->ordered()->get();
+        $projects = Project::query()->with('category')->active()->featured()->ordered()->limit(6)->get();
         $reviews = Review::query()->active()->ordered()->get();
         $processSteps = ProcessStep::query()->active()->ordered()->get();
         $settings = SiteSetting::current();
@@ -26,6 +28,7 @@ class HomeController extends Controller
             'reviews' => $reviews,
             'projects' => $projects,
             'services' => $services,
+            'categories' => $categories,
 
             // JSON payloads consumed by public/js/home.js — see README-BACKEND.md
             // for the exact shape expected by the wizard / grid render functions.
@@ -41,7 +44,7 @@ class HomeController extends Controller
 
             'projectsJson' => $projects->map(fn (Project $project) => [
                 'id' => $project->slug,
-                'cat' => $project->category,
+                'cat' => $project->category_id,
                 'location' => $project->location,
                 'duration' => $project->duration,
                 'title' => $project->getTranslations('title'),

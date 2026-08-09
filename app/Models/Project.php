@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Str;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
@@ -15,8 +17,6 @@ class Project extends Model implements HasMedia
     use HasTranslations;
     use InteractsWithMedia;
 
-    public const CATEGORIES = ['bathrooms', 'kitchens', 'electrical', 'renovations'];
-
     public array $translatable = [
         'title',
         'overview',
@@ -26,7 +26,7 @@ class Project extends Model implements HasMedia
 
     protected $fillable = [
         'slug',
-        'category',
+        'category_id',
         'location',
         'duration',
         'title',
@@ -49,9 +49,9 @@ class Project extends Model implements HasMedia
     {
         static::saving(function (Project $project) {
             if (blank($project->slug) && $project->isDirty('title')) {
-                $project->slug = \Illuminate\Support\Str::slug(
+                $project->slug = Str::slug(
                     $project->getTranslation('title', 'en') ?: $project->getTranslation('title', 'nl')
-                ).'-'.\Illuminate\Support\Str::random(4);
+                ).'-'.Str::random(4);
             }
         });
     }
@@ -95,10 +95,15 @@ class Project extends Model implements HasMedia
         return $query->orderBy('sort_order');
     }
 
+    public function category(): BelongsTo
+    {
+        return $this->belongsTo(Category::class);
+    }
+
     public function scopeCategory($query, ?string $category)
     {
         return ($category && $category !== 'all')
-            ? $query->where('category', $category)
+            ? $query->where('category_id', $category)
             : $query;
     }
 }

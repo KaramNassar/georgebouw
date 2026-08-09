@@ -284,8 +284,8 @@
 </div>
 <div class="no-scrollbar -mx-1 flex gap-2 overflow-x-auto px-1 pb-1">
 <button class="filter-btn whitespace-nowrap rounded-full border border-white/10 bg-charcoal px-4 py-2 text-sm font-semibold text-neutral transition hover:border-crimson/50 hover:text-white" data-filter="all">Alle</button>
-@foreach(App\Models\Project::CATEGORIES as $category)
-<button class="filter-btn whitespace-nowrap rounded-full border border-white/10 bg-charcoal px-4 py-2 text-sm font-semibold text-neutral transition hover:border-crimson/50 hover:text-white" data-filter="{{ $category }}">{{ ucfirst($category) }}</button>
+@foreach($categories as $category)
+<button class="filter-btn whitespace-nowrap rounded-full border border-white/10 bg-charcoal px-4 py-2 text-sm font-semibold text-neutral transition hover:border-crimson/50 hover:text-white" data-filter="{{ $category->id }}">{{ $category->name }}</button>
 @endforeach
 </div>
 </div>
@@ -306,12 +306,12 @@
 </div> --}}
 <div class="grid gap-4 mt-12 sm:grid-cols-2">
 @foreach($projects as $project)
-<a href="{{ route('project.show', $project) }}" class="reveal group" data-category="{{ $project->category }}">
+<a href="{{ route('project.show', $project) }}" class="reveal group" data-category="{{ $project->category_id }}">
 <div class="aspect-[4/3] overflow-hidden rounded-2xl border border-white/10">
 <img alt="{{ $project->title }}" class="h-full w-full object-cover transition group-hover:scale-105" src="{{ $project->heroImageUrl() }}"/>
 </div>
 <div class="mt-3">
-<span class="inline-block rounded-full bg-crimson/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-wide text-crimson2">{{ ucfirst($project->category) }}</span>
+<span class="inline-block rounded-full bg-crimson/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-wide text-crimson2">{{ $project->category->name }}</span>
 <h3 class="mt-2 font-display text-lg font-bold">{{ $project->title }}</h3>
 <p class="mt-1 text-sm text-neutral">{{ $project->location }} · {{ $project->duration }}</p>
 </div>

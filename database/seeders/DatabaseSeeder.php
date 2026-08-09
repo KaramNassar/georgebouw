@@ -2,12 +2,13 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Category;
 use App\Models\ProcessStep;
 use App\Models\Project;
 use App\Models\Review;
 use App\Models\Service;
 use App\Models\SiteSetting;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -27,6 +28,76 @@ class DatabaseSeeder extends Seeder
             'instagram_url' => null,
             'default_locale' => 'nl',
         ]);
+
+        $categories = [
+            [
+                'slug' => 'badkamers',
+                'name' => [
+                    'nl' => 'Badkamers',
+                    'en' => 'Bathrooms',
+                ],
+                'sort_order' => 1,
+            ],
+            [
+                'slug' => 'keukens',
+                'name' => [
+                    'nl' => 'Keukens',
+                    'en' => 'Kitchens',
+                ],
+                'sort_order' => 2,
+            ],
+            [
+                'slug' => 'elektra',
+                'name' => [
+                    'nl' => 'Elektra',
+                    'en' => 'Electrical',
+                ],
+                'sort_order' => 3,
+            ],
+            [
+                'slug' => 'renovatie',
+                'name' => [
+                    'nl' => 'Renovatie',
+                    'en' => 'Renovations',
+                ],
+                'sort_order' => 4,
+            ],
+            [
+                'slug' => 'loodgieter',
+                'name' => [
+                    'nl' => 'Loodgieter',
+                    'en' => 'Plumbing',
+                ],
+                'sort_order' => 5,
+            ],
+            [
+                'slug' => 'stucwerk',
+                'name' => [
+                    'nl' => 'Stucwerk',
+                    'en' => 'Plastering',
+                ],
+                'sort_order' => 6,
+            ],
+            [
+                'slug' => 'tegelwerk',
+                'name' => [
+                    'nl' => 'Tegelwerk',
+                    'en' => 'Tiling',
+                ],
+                'sort_order' => 7,
+            ],
+        ];
+
+        foreach ($categories as $category) {
+            Category::updateOrCreate(
+                ['slug' => $category['slug']],
+                [
+                    'name' => $category['name'],
+                    'sort_order' => $category['sort_order'],
+                    'is_active' => true,
+                ]
+            );
+        }
 
         $services = [
             [
@@ -162,7 +233,7 @@ class DatabaseSeeder extends Seeder
 
         $projects = [
             [
-                'slug' => 'badkamer-toilet-rotterdam', 'category' => 'bathrooms', 'location' => 'Rotterdam', 'duration' => '3 weken',
+                'slug' => 'badkamer-toilet-rotterdam', 'category_id' => 1, 'location' => 'Rotterdam', 'duration' => '3 weken',
                 'title' => ['nl' => 'Badkamer & Toilet Renovatie', 'en' => 'Bathroom & Toilet Renovation'],
                 'scope_summary' => ['nl' => 'Tegelwerk, sanitair, verlichting', 'en' => 'Tiling, fixtures, lighting'],
                 'overview' => [
@@ -176,7 +247,7 @@ class DatabaseSeeder extends Seeder
                 'is_featured' => true,
             ],
             [
-                'slug' => 'groepenkast-bedrading-den-haag', 'category' => 'electrical', 'location' => 'Den Haag', 'duration' => '4 dagen',
+                'slug' => 'groepenkast-bedrading-den-haag', 'category_id' => 2, 'location' => 'Den Haag', 'duration' => '4 dagen',
                 'title' => ['nl' => 'Groepenkast & Bedrading', 'en' => 'Fuse Box & Wiring'],
                 'scope_summary' => ['nl' => 'Nieuwe groepenkast, keuring', 'en' => 'New fuse box, inspection'],
                 'overview' => [
@@ -190,7 +261,7 @@ class DatabaseSeeder extends Seeder
                 'is_featured' => false,
             ],
             [
-                'slug' => 'volledige-woningrenovatie-delft', 'category' => 'renovations', 'location' => 'Delft', 'duration' => '8 weken',
+                'slug' => 'volledige-woningrenovatie-delft', 'category_id' => 3, 'location' => 'Delft', 'duration' => '8 weken',
                 'title' => ['nl' => 'Volledige Woningrenovatie', 'en' => 'Full Home Renovation'],
                 'scope_summary' => ['nl' => 'Timmerwerk, stucwerk, afwerking', 'en' => 'Carpentry, plastering, finishing'],
                 'overview' => [
@@ -204,7 +275,7 @@ class DatabaseSeeder extends Seeder
                 'is_featured' => true,
             ],
             [
-                'slug' => 'keuken-sanitair-schiedam', 'category' => 'kitchens', 'location' => 'Schiedam', 'duration' => '2 weken',
+                'slug' => 'keuken-sanitair-schiedam', 'category_id' => 4, 'location' => 'Schiedam', 'duration' => '2 weken',
                 'title' => ['nl' => 'Keuken & Sanitair', 'en' => 'Kitchen & Fixtures'],
                 'scope_summary' => ['nl' => 'Leidingwerk, montage, tegels', 'en' => 'Plumbing, installation, tiling'],
                 'overview' => [
@@ -218,7 +289,7 @@ class DatabaseSeeder extends Seeder
                 'is_featured' => false,
             ],
             [
-                'slug' => 'stuc-schilderwerk-rotterdam', 'category' => 'renovations', 'location' => 'Rotterdam', 'duration' => '1 week',
+                'slug' => 'stuc-schilderwerk-rotterdam', 'category_id' => 5, 'location' => 'Rotterdam', 'duration' => '1 week',
                 'title' => ['nl' => 'Stuc- & Schilderwerk', 'en' => 'Plastering & Painting'],
                 'scope_summary' => ['nl' => 'Stucwerk, schilderwerk', 'en' => 'Plastering, painting'],
                 'overview' => [
@@ -232,7 +303,7 @@ class DatabaseSeeder extends Seeder
                 'is_featured' => false,
             ],
             [
-                'slug' => 'tegelwerk-vlaardingen', 'category' => 'bathrooms', 'location' => 'Vlaardingen', 'duration' => '5 dagen',
+                'slug' => 'tegelwerk-vlaardingen', 'category_id' => 6, 'location' => 'Vlaardingen', 'duration' => '5 dagen',
                 'title' => ['nl' => 'Tegelwerk Vloer & Wand', 'en' => 'Floor & Wall Tiling'],
                 'scope_summary' => ['nl' => 'Vloer- en wandtegels', 'en' => 'Floor and wall tiles'],
                 'overview' => [
@@ -251,7 +322,7 @@ class DatabaseSeeder extends Seeder
             Project::query()->updateOrCreate(
                 ['slug' => $data['slug']],
                 [
-                    'category' => $data['category'],
+                    'category_id' => $data['category_id'],
                     'location' => $data['location'],
                     'duration' => $data['duration'],
                     'title' => $data['title'],

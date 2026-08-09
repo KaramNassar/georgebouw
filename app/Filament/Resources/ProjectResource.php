@@ -52,13 +52,10 @@ class ProjectResource extends Resource
                         ->required()
                         ->unique(ignoreRecord: true)
                         ->maxLength(170),
-                    Select::make('category')
-                        ->options([
-                            'bathrooms' => 'Bathrooms',
-                            'kitchens' => 'Kitchens',
-                            'electrical' => 'Electrical',
-                            'renovations' => 'Full renovations',
-                        ])
+                    Select::make('category_id')
+                        ->relationship('category', 'name')
+                        ->searchable()
+                        ->preload()
                         ->required(),
                     TextInput::make('location')
                         ->maxLength(120),
@@ -120,7 +117,7 @@ class ProjectResource extends Resource
                     ->searchable()
                     ->sortable()
                     ->weight('bold'),
-                TextColumn::make('category')
+                TextColumn::make('category.name')
                     ->badge(),
                 TextColumn::make('location'),
                 TextColumn::make('duration'),
@@ -131,13 +128,8 @@ class ProjectResource extends Resource
             ->defaultSort('sort_order')
             ->reorderable('sort_order')
             ->filters([
-                SelectFilter::make('category')
-                    ->options([
-                        'bathrooms' => 'Bathrooms',
-                        'kitchens' => 'Kitchens',
-                        'electrical' => 'Electrical',
-                        'renovations' => 'Full renovations',
-                    ]),
+                SelectFilter::make('category_id')
+                    ->relationship('category', 'name'),
             ]);
     }
 
