@@ -281,6 +281,10 @@
 <div class="max-w-2xl text-center lg:text-left">
 <p class="text-xs font-semibold uppercase tracking-[0.3em] text-crimson2">{{ __('messages.port.eyebrow') }}</p>
 <h2 class="mt-3 font-display text-3xl font-extrabold sm:text-4xl">{{ __('messages.port.title') }}</h2>
+<a class="mt-5 inline-flex items-center gap-2 rounded-lg border border-white/15 bg-charcoal px-5 py-3 text-sm font-semibold text-white transition hover:border-crimson/50" href="{{ route('projects.index') }}">
+<span>{{ __('messages.port.all') }}</span>
+<i class="h-4 w-4 text-crimson2" data-lucide="arrow-right"></i>
+</a>
 </div>
 <div class="no-scrollbar -mx-1 flex gap-2 overflow-x-auto px-1 pb-1">
 <button class="filter-btn whitespace-nowrap rounded-full border border-white/10 bg-charcoal px-4 py-2 text-sm font-semibold text-neutral transition hover:border-crimson/50 hover:text-white" data-filter="all">Alle</button>

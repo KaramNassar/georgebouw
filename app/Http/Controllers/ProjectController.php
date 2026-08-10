@@ -7,6 +7,20 @@ use App\Models\SiteSetting;
 
 class ProjectController extends Controller
 {
+    public function index()
+    {
+        $projects = Project::query()
+            ->with('category')
+            ->active()
+            ->ordered()
+            ->get();
+
+        return view('projects.index', [
+            'projects' => $projects,
+            'settings' => SiteSetting::current(),
+        ]);
+    }
+
     public function show(Project $project)
     {
         abort_unless($project->is_active, 404);

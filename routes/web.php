@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
+Route::get('/projects', [ProjectController::class, 'index'])->name('projects.index');
 Route::get('/project/{project:slug}', [ProjectController::class, 'show'])->name('project.show');
 Route::get('/service/{service:slug}', [ServiceController::class, 'show'])->name('service.show');
 
