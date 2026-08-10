@@ -71,6 +71,7 @@ return [
     'con.f.service' => 'Service',
     'con.f.msg' => 'Message',
     'con.f.send' => 'Send Request',
+    'con.f.thanks' => 'Thank you for contacting us. We will get back to you soon.',
     'con.f.note' => 'Response typically within 24 hours.',
     'foot.tag' => 'Construction & Renovation',
     'float.wa' => 'Chat',

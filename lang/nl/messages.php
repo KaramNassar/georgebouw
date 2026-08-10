@@ -71,6 +71,7 @@ return [
     'con.f.service' => 'Dienst',
     'con.f.msg' => 'Bericht',
     'con.f.send' => 'Aanvraag versturen',
+    'con.f.thanks' => 'Bedankt voor uw bericht. We nemen snel contact met u op.',
     'con.f.note' => 'Reactie doorgaans binnen 24 uur.',
     'foot.tag' => 'Bouw & Renovatie',
     'float.wa' => 'Chat',

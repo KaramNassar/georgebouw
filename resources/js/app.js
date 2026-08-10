@@ -109,19 +109,69 @@ function updateSize(value) {
 // Make updateSize globally available
 window.updateSize = updateSize;
 
+function metaContent(name) {
+    return document.querySelector(`meta[name="${name}"]`)?.content || '';
+}
+
+async function postLead(url, body) {
+    const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+            Accept: 'application/json',
+            'X-CSRF-TOKEN': metaContent('csrf-token'),
+        },
+        body,
+    });
+
+    if (!response.ok) {
+        throw new Error(`Lead storage failed with status ${response.status}`);
+    }
+
+    return response.json();
+}
+
+async function postJsonLead(url, payload) {
+    const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': metaContent('csrf-token'),
+        },
+        body: JSON.stringify(payload),
+    });
+
+    if (!response.ok) {
+        throw new Error(`Lead storage failed with status ${response.status}`);
+    }
+
+    return response.json();
+}
+
 // Contact form submission
-function contactSubmit(event) {
+async function contactSubmit(event) {
     event.preventDefault();
+    const form = event.target;
     const name = document.getElementById('cName').value;
     const phone = document.getElementById('cPhone').value;
-    const service = document.getElementById('cService').value;
+    const serviceSelect = document.getElementById('cService');
+    const service = serviceSelect.value;
     const message = document.getElementById('cMsg').value;
+    const contactStatus = document.getElementById('contactStatus');
 
-    const whatsappText = encodeURIComponent(
-        `Nieuwe aanvraag:\n\nNaam: ${name}\nTelefoon: ${phone}\nDienst: ${service}\nBericht: ${message}`
-    );
+    try {
+        await postJsonLead(metaContent('contact-message-store-url'), {
+            name,
+            phone,
+            service,
+            message,
+        });
 
-    window.open(`https://wa.me/31684954212?text=${whatsappText}`, '_blank');
+        form.reset();
+        contactStatus?.classList.remove('hidden');
+    } catch (error) {
+        console.error(error);
+    }
 }
 
 // Make contactSubmit globally available
@@ -168,6 +218,144 @@ function submitEmail() {
     
     window.location.href = `mailto:info@georgebouw.nl?subject=${subject}&body=${body}`;
 }
+
+function selectedRadioValue(name) {
+    return document.querySelector(`input[name="${name}"]:checked`)?.value || '';
+}
+
+function mappedWizardValue(type, value) {
+    const maps = {
+        urgency: {
+            flexible: 'flexible',
+            '1-3months': 'soon',
+            asap: 'urgent',
+        },
+        material: {
+            basic: 'standard',
+            standard: 'premium',
+            premium: 'luxury',
+        },
+        budget: {
+            economy: 'a',
+            mid: 'b',
+            high: 'c',
+        },
+    };
+
+    return maps[type][value] || '';
+}
+
+function quoteSummary() {
+    const name = document.getElementById('leadName').value;
+    const selectedServices = [];
+    document.querySelectorAll('input[data-service]:checked').forEach(cb => {
+        selectedServices.push(cb.value);
+    });
+
+    return {
+        name,
+        selectedServices,
+        propertyType: selectedRadioValue('propertyType'),
+        size: document.getElementById('sizeRange')?.value || '',
+        urgency: selectedRadioValue('urgency'),
+        material: selectedRadioValue('material'),
+        budget: selectedRadioValue('budget'),
+    };
+}
+
+function collectQuoteRequestFormData() {
+    const summary = quoteSummary();
+
+    if (summary.selectedServices.length === 0) {
+        return null;
+    }
+
+    const formData = new FormData();
+    formData.append('name', summary.name);
+    summary.selectedServices.forEach(service => formData.append('scope[]', service));
+    formData.append('property_type', summary.propertyType);
+    formData.append('size_m2', summary.size);
+    formData.append('urgency', mappedWizardValue('urgency', summary.urgency));
+    formData.append('material', mappedWizardValue('material', summary.material));
+    formData.append('budget_bracket', mappedWizardValue('budget', summary.budget));
+    formData.append('locale', document.documentElement.lang || 'nl');
+
+    Array.from(document.getElementById('quotePhotos')?.files || []).forEach(photo => {
+        formData.append('photos[]', photo);
+    });
+
+    return formData;
+}
+
+async function storeQuoteRequest() {
+    const formData = collectQuoteRequestFormData();
+
+    if (!formData) {
+        alert('Kies minimaal een dienst voordat u de aanvraag verstuurt.');
+        return false;
+    }
+
+    try {
+        await postLead(metaContent('quote-request-store-url'), formData);
+    } catch (error) {
+        console.error(error);
+    }
+
+    return true;
+}
+
+submitWhatsApp = async function () {
+    const {
+        name,
+        selectedServices,
+        propertyType,
+        size,
+        urgency,
+        material,
+        budget,
+    } = quoteSummary();
+    const whatsappWindow = window.open('', '_blank');
+    const stored = await storeQuoteRequest();
+
+    if (!stored) {
+        whatsappWindow?.close();
+        return;
+    }
+
+    const text = encodeURIComponent(
+        `Projectaanvraag:\n\nDiensten: ${selectedServices.join(', ')}\nType woning: ${propertyType}\nOppervlakte: ${size} mÂ²\nPlanning: ${urgency}\nMateriaal: ${material}\nBudget: ${budget}\nNaam: ${name}`
+    );
+
+    if (whatsappWindow) {
+        whatsappWindow.location.href = `https://wa.me/31684954212?text=${text}`;
+    } else {
+        window.location.href = `https://wa.me/31684954212?text=${text}`;
+    }
+};
+
+submitEmail = async function () {
+    const {
+        name,
+        selectedServices,
+        propertyType,
+        size,
+        urgency,
+        material,
+        budget,
+    } = quoteSummary();
+    const stored = await storeQuoteRequest();
+
+    if (!stored) {
+        return;
+    }
+
+    const subject = encodeURIComponent('Projectaanvraag - GEORGE BOUW');
+    const body = encodeURIComponent(
+        `Naam: ${name}\n\nDiensten: ${selectedServices.join(', ')}\nType woning: ${propertyType}\nOppervlakte: ${size} mÂ²\nPlanning: ${urgency}\nMateriaal: ${material}\nBudget: ${budget}`
+    );
+
+    window.location.href = `mailto:info@georgebouw.nl?subject=${subject}&body=${body}`;
+};
 
 function onUpload(input) {
     const label = document.getElementById('uploadLabel');

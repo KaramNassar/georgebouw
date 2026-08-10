@@ -6,6 +6,10 @@
   <title>@yield('title', 'GEORGE BOUW Construction — Uw Partner In Bouw & Renovatie')</title>
   <meta name="description" content="@yield('description', 'GEORGE BOUW Construction — Vakmanschap, betrouwbaarheid en kwaliteit in detail. Van A tot Z verzorgd. Badkamers, keukens, elektra, loodgieterswerk, stucwerk, timmerwerk en tegelwerk.')" />
 
+  <meta name="csrf-token" content="{{ csrf_token() }}" />
+  <meta name="quote-request-store-url" content="{{ route('quote-requests.store') }}" />
+  <meta name="contact-message-store-url" content="{{ route('contact-messages.store') }}" />
+
   @vite(['resources/css/app.css', 'resources/js/app.js'])
 
   <!-- Lucide Icons -->

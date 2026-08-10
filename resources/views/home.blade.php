@@ -245,7 +245,7 @@
 <label class="flex cursor-pointer items-center gap-3 rounded-lg border border-dashed border-white/15 bg-ink px-4 py-3 text-sm text-neutral transition hover:border-crimson/50">
 <i class="h-5 w-5 text-crimson2" data-lucide="image-plus"></i>
 <span id="uploadLabel">{{ __('messages.wiz.s4.upload') }}</span>
-<input accept="image/*" class="hidden" multiple="" onchange="onUpload(this)" type="file"/>
+<input accept="image/*" class="hidden" id="quotePhotos" multiple="" onchange="onUpload(this)" type="file"/>
 </label>
 </div>
 <div class="flex flex-col gap-3 pt-2">
@@ -396,12 +396,34 @@
 </a>
 </div>
 <div class="mt-8 flex flex-col items-center lg:items-start">
+@php
+    $whatsappSocialUrl = filled($settings->whatsapp_number) ? 'https://wa.me/'.$settings->whatsappDigits() : null;
+    $hasSocialLinks = filled($settings->tiktok_url) || filled($settings->instagram_url) || filled($whatsappSocialUrl);
+@endphp
+@if($hasSocialLinks)
 <p class="mb-3 text-xs font-semibold uppercase tracking-[0.25em] text-neutral">{{ __('messages.con.follow') }}</p>
 <div class="flex gap-3">
-<a aria-label="TikTok" class="grid h-11 w-11 place-items-center rounded-lg border border-white/10 bg-charcoal text-neutral transition hover:border-crimson/50 hover:text-crimson2" href="#"><i class="h-5 w-5" data-lucide="music-2"></i></a>
-<a aria-label="Instagram" class="grid h-11 w-11 place-items-center rounded-lg border border-white/10 bg-charcoal text-neutral transition hover:border-crimson/50 hover:text-crimson2" href="#"><i class="h-5 w-5" data-lucide="instagram"></i></a>
-<a aria-label="WhatsApp" class="grid h-11 w-11 place-items-center rounded-lg border border-white/10 bg-charcoal text-neutral transition hover:border-crimson/50 hover:text-crimson2" href="https://wa.me/31684954212"><i class="h-5 w-5" data-lucide="message-circle"></i></a>
+@if(filled($settings->tiktok_url))
+<a aria-label="TikTok" class="grid h-11 w-11 place-items-center rounded-lg border border-white/10 bg-charcoal text-neutral transition hover:border-crimson/50 hover:text-crimson2" href="{{ $settings->tiktok_url }}" rel="noopener" target="_blank"><i class="h-5 w-5" data-lucide="music-2"></i></a>
+@endif
+@if(filled($settings->instagram_url))
+<a aria-label="Instagram" class="grid h-11 w-11 place-items-center rounded-lg border border-white/10 bg-charcoal text-neutral transition hover:border-crimson/50 hover:text-crimson2" href="{{ $settings->instagram_url }}" rel="noopener" target="_blank">
+<svg aria-hidden="true" class="h-5 w-5" fill="none" viewBox="0 0 24 24">
+<rect height="18" rx="5" stroke="currentColor" stroke-width="2" width="18" x="3" y="3"></rect>
+<circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="2"></circle>
+<circle cx="17.5" cy="6.5" fill="currentColor" r="1.25"></circle>
+</svg>
+</a>
+@endif
+@if($whatsappSocialUrl)
+<a aria-label="WhatsApp" class="grid h-11 w-11 place-items-center rounded-lg border border-white/10 bg-charcoal text-neutral transition hover:border-crimson/50 hover:text-crimson2" href="{{ $whatsappSocialUrl }}" rel="noopener" target="_blank">
+<svg aria-hidden="true" class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+<path d="M12.04 2C6.57 2 2.12 6.34 2.12 11.68c0 1.7.46 3.35 1.34 4.8L2 22l5.66-1.44a10.2 10.2 0 0 0 4.38.99c5.47 0 9.92-4.34 9.92-9.68S17.51 2 12.04 2Zm0 17.9c-1.43 0-2.83-.37-4.06-1.08l-.29-.17-3.36.86.87-3.22-.19-.3a8.04 8.04 0 0 1-1.25-4.31c0-4.43 3.71-8.03 8.28-8.03s8.28 3.6 8.28 8.03-3.72 8.22-8.28 8.22Zm4.54-6.01c-.25-.12-1.47-.7-1.7-.79-.23-.08-.4-.12-.57.12-.17.25-.65.79-.8.95-.15.17-.29.19-.54.07-.25-.13-1.06-.38-2.02-1.21-.75-.65-1.25-1.45-1.39-1.69-.15-.25-.02-.38.11-.5.12-.11.25-.29.38-.43.13-.15.17-.25.25-.42.08-.16.04-.31-.02-.43-.06-.13-.57-1.34-.78-1.83-.2-.47-.41-.41-.57-.42h-.49c-.17 0-.44.06-.67.31-.23.25-.88.84-.88 2.04s.9 2.36 1.02 2.52c.13.17 1.78 2.65 4.31 3.72.6.25 1.07.4 1.44.52.6.19 1.15.16 1.58.1.48-.07 1.47-.58 1.68-1.15.21-.56.21-1.04.15-1.15-.06-.1-.23-.16-.48-.28Z"></path>
+</svg>
+</a>
+@endif
 </div>
+@endif
 </div>
 </div>
 <!-- Contact form -->
@@ -422,17 +444,18 @@
 <select class="w-full rounded-lg border border-white/10 bg-ink px-4 py-3 text-sm outline-none focus:border-crimson/60" id="cService">
 <option value="">Kies een dienst...</option>
 @foreach($services as $service)
-<option value="{{ $service->name }}">{{ $service->name }}</option>
+<option value="{{ $service->slug }}">{{ $service->name }}</option>
 @endforeach
 </select>
 </div>
 <div>
 <label class="mb-2 block text-sm font-semibold">{{ __('messages.con.f.msg') }}</label>
-<textarea class="w-full rounded-lg border border-white/10 bg-ink px-4 py-3 text-sm outline-none focus:border-crimson/60" id="cMsg" rows="4"></textarea>
+<textarea class="w-full rounded-lg border border-white/10 bg-ink px-4 py-3 text-sm outline-none focus:border-crimson/60" id="cMsg" rows="4" required=""></textarea>
 </div>
 <button class="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-crimson px-5 py-3.5 font-semibold text-white transition hover:bg-crimson2 hover:crimson-glow" type="submit">
 <i class="h-5 w-5" data-lucide="send"></i><span>{{ __('messages.con.f.send') }}</span>
 </button>
+<p class="hidden rounded-lg border border-crimson/30 bg-crimson/10 px-4 py-3 text-center text-sm font-semibold text-white" id="contactStatus">{{ __('messages.con.f.thanks') }}</p>
 <p class="text-center text-[11px] text-neutral">{{ __('messages.con.f.note') }}</p>
 </form>
 </div>
