@@ -87,19 +87,31 @@
 </div>
 </section>
 <!-- VIDEOS -->
-<section class="hidden py-10" id="pVideoSection">
+@php
+    $uploadedVideoUrl = $project->uploadedVideoUrl();
+    $uploadedVideoMimeType = $project->uploadedVideoMimeType();
+@endphp
+@if($uploadedVideoUrl || filled($project->video_url))
+<section class="py-10" id="pVideoSection">
 <div class="mx-auto max-w-6xl px-4 sm:px-6">
 <h2 class="reveal font-display text-2xl font-extrabold">{{ __('messages.lbl.videos') }}</h2>
-<p class="reveal mt-1 text-xs text-neutral">{{ __('messages.vid.note') }}</p>
-@if($project->video_url)
 <div class="reveal mt-6 grid gap-4 sm:grid-cols-2">
+@if($uploadedVideoUrl)
+<div class="aspect-video overflow-hidden rounded-2xl border border-white/10 bg-black">
+<video class="h-full w-full" controls preload="metadata">
+<source src="{{ $uploadedVideoUrl }}" type="{{ $uploadedVideoMimeType ?? 'video/mp4' }}">
+</video>
+</div>
+@endif
+@if($project->video_url)
 <div class="aspect-video overflow-hidden rounded-2xl border border-white/10">
 <iframe allowfullscreen class="h-full w-full" src="{{ $project->video_url }}"></iframe>
 </div>
-</div>
 @endif
 </div>
+</div>
 </section>
+@endif
 <!-- OTHER PROJECTS -->
 <section class="py-14">
 <div class="mx-auto max-w-6xl px-4 sm:px-6">

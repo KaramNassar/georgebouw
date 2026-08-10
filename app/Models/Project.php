@@ -17,6 +17,13 @@ class Project extends Model implements HasMedia
     use HasTranslations;
     use InteractsWithMedia;
 
+    public const VIDEO_MIME_TYPES = [
+        'video/mp4',
+        'video/webm',
+        'video/ogg',
+        'video/quicktime',
+    ];
+
     public array $translatable = [
         'title',
         'overview',
@@ -64,6 +71,9 @@ class Project extends Model implements HasMedia
     {
         $this->addMediaCollection('image')->singleFile();
         $this->addMediaCollection('gallery');
+        $this->addMediaCollection('video')
+            ->acceptsMimeTypes(self::VIDEO_MIME_TYPES)
+            ->singleFile();
     }
 
     public function heroImageUrl(?string $conversion = null): ?string
@@ -77,6 +87,21 @@ class Project extends Model implements HasMedia
         return $this->getMedia('gallery')
             ->map(fn (Media $media) => $media->getUrl($conversion ?? ''))
             ->all();
+    }
+
+    public function videoMedia(): ?Media
+    {
+        return $this->getFirstMedia('video');
+    }
+
+    public function uploadedVideoUrl(): ?string
+    {
+        return $this->videoMedia()?->getUrl();
+    }
+
+    public function uploadedVideoMimeType(): ?string
+    {
+        return $this->videoMedia()?->mime_type;
     }
 
     public function scopeActive($query)

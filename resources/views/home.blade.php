@@ -141,6 +141,7 @@
 </label>
 @endforeach
 </div>
+<p class="mt-4 hidden rounded-lg border border-crimson/30 bg-crimson/10 px-4 py-3 text-sm font-semibold text-white" id="wizardServiceError">{{ __('messages.wiz.service_required') }}</p>
 </div>
 <!-- STEP 2 -->
 <div class="wizard-panel hidden" data-step="2">
@@ -183,6 +184,7 @@
 </div>
 </div>
 </div>
+<p class="mt-4 hidden rounded-lg border border-crimson/30 bg-crimson/10 px-4 py-3 text-sm font-semibold text-white" id="wizardStep2Error">{{ __('messages.wiz.step_required') }}</p>
 </div>
 <!-- STEP 3 -->
 <div class="wizard-panel hidden" data-step="3">
@@ -224,6 +226,7 @@
 </div>
 </div>
 </div>
+<p class="mt-4 hidden rounded-lg border border-crimson/30 bg-crimson/10 px-4 py-3 text-sm font-semibold text-white" id="wizardStep3Error">{{ __('messages.wiz.step_required') }}</p>
 </div>
 <!-- STEP 4 -->
 <div class="wizard-panel hidden" data-step="4">
@@ -238,7 +241,8 @@
 <div class="space-y-4">
 <div>
 <label class="mb-2 block text-sm font-semibold">{{ __('messages.wiz.s4.name') }}</label>
-<input class="w-full rounded-lg border border-white/10 bg-ink px-4 py-3 text-sm outline-none focus:border-crimson/60" id="leadName" placeholder="..." type="text"/>
+<input class="w-full rounded-lg border border-white/10 bg-ink px-4 py-3 text-sm outline-none focus:border-crimson/60" id="leadName" placeholder="..." required type="text"/>
+<p class="mt-2 hidden text-sm font-semibold text-crimson2" id="wizardNameError">{{ __('messages.wiz.name_required') }}</p>
 </div>
 <div>
 <label class="mb-2 block text-sm font-semibold">{{ __('messages.wiz.s4.photos') }} <span class="font-normal text-neutral">(optioneel)</span></label>
@@ -468,7 +472,3 @@
 </section>
 </main>
 @endsection
-
-@push('scripts')
-<script src="{{ asset('js/app.js') }}"></script>
-@endpush

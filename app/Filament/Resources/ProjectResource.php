@@ -59,8 +59,9 @@ class ProjectResource extends Resource
                         ->maxLength(60)
                         ->helperText('e.g. "3 weeks"'),
                     TextInput::make('video_url')
-                        ->label('Video URL (optional)')
+                        ->label('Video URL (optional fallback)')
                         ->url()
+                        ->helperText('Use this for YouTube/Vimeo embed links, or upload a video file below.')
                         ->maxLength(255)
                         ->columnSpan(2),
                     Toggle::make('is_featured'),
@@ -101,6 +102,14 @@ class ProjectResource extends Resource
                         ->reorderable()
                         ->maxSize(10240)
                         ->helperText('Project photo album.'),
+                    SpatieMediaLibraryFileUpload::make('video')
+                        ->collection('video')
+                        ->label('Video upload')
+                        ->acceptedFileTypes(Project::VIDEO_MIME_TYPES)
+                        ->maxSize(102400)
+                        ->openable()
+                        ->downloadable()
+                        ->helperText('Upload one project video directly. Accepted: MP4, WebM, OGG, MOV. Max 100 MB.'),
                 ]),
         ]);
     }

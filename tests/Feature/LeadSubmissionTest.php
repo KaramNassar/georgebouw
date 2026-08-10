@@ -32,6 +32,27 @@ test('quote request submissions are stored in the database', function () {
         ->status->toBe('new');
 });
 
+test('quote request submissions require all wizard details', function () {
+    $response = $this
+        ->withHeader('Accept', 'application/json')
+        ->post(route('quote-requests.store'), [
+            'scope' => ['bathroom-renovation'],
+        ]);
+
+    expect($response->getStatusCode())->toBe(422);
+
+    expect($response->json('errors'))->toHaveKeys([
+        'name',
+        'property_type',
+        'size_m2',
+        'urgency',
+        'material',
+        'budget_bracket',
+    ]);
+
+    expect(QuoteRequest::query()->exists())->toBeFalse();
+});
+
 test('contact message submissions are stored in the database', function () {
     $service = Service::query()->create([
         'name' => ['nl' => 'Badkamer', 'en' => 'Bathroom'],

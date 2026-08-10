@@ -60,26 +60,138 @@ window.setBA = setBA;
 let currentStep = 1;
 const totalSteps = 4;
 
-function wizNav(direction) {
+function selectedServiceInputs() {
+    return Array.from(document.querySelectorAll('input[data-service]:checked'));
+}
+
+function hideWizardErrors() {
+    [
+        'wizardServiceError',
+        'wizardStep2Error',
+        'wizardStep3Error',
+        'wizardNameError',
+    ].forEach(id => document.getElementById(id)?.classList.add('hidden'));
+
+    document.getElementById('leadName')?.classList.remove('border-crimson');
+}
+
+function updateWizardNavigation() {
     const panels = document.querySelectorAll('.wizard-panel');
     const backBtn = document.getElementById('wizBack');
     const nextBtn = document.getElementById('wizNext');
 
     panels.forEach(panel => panel.classList.add('hidden'));
 
-    currentStep += direction;
-
-    if (currentStep < 1) currentStep = 1;
-    if (currentStep > totalSteps) currentStep = totalSteps;
-
     const currentPanel = document.querySelector(`[data-step="${currentStep}"]`);
     if (currentPanel) {
         currentPanel.classList.remove('hidden');
     }
 
-    backBtn.disabled = currentStep === 1;
-    nextBtn.textContent = currentStep === totalSteps ? 'Afronden' : 'Volgende';
+    if (backBtn) {
+        backBtn.disabled = currentStep === 1;
+    }
 
+    const nextLabel = nextBtn?.querySelector('span');
+    if (nextLabel) {
+        nextLabel.textContent = currentStep === totalSteps
+            ? nextBtn.dataset.finishLabel || 'Afronden'
+            : nextBtn.dataset.nextLabel || 'Volgende';
+    }
+}
+
+function showWizardServiceError() {
+    currentStep = 1;
+    updateWizardNavigation();
+    updateWizardSteps();
+
+    hideWizardErrors();
+    const error = document.getElementById('wizardServiceError');
+    error?.classList.remove('hidden');
+    error?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    document.querySelector('input[data-service]')?.focus();
+}
+
+function showWizardStepError(step, errorId, focusSelector) {
+    currentStep = step;
+    updateWizardNavigation();
+    updateWizardSteps();
+    hideWizardErrors();
+
+    const error = document.getElementById(errorId);
+    error?.classList.remove('hidden');
+    error?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    document.querySelector(focusSelector)?.focus();
+}
+
+function validateWizardStep(step) {
+    if (step === 1 && selectedServiceInputs().length === 0) {
+        showWizardServiceError();
+        return false;
+    }
+
+    if (
+        step === 2
+        && (
+            !selectedRadioValue('propertyType')
+            || !selectedRadioValue('urgency')
+            || !document.getElementById('sizeRange')?.value
+        )
+    ) {
+        const focusSelector = !selectedRadioValue('propertyType')
+            ? 'input[name="propertyType"]'
+            : (!selectedRadioValue('urgency') ? 'input[name="urgency"]' : '#sizeRange');
+
+        showWizardStepError(2, 'wizardStep2Error', focusSelector);
+        return false;
+    }
+
+    if (
+        step === 3
+        && (
+            !selectedRadioValue('material')
+            || !selectedRadioValue('budget')
+        )
+    ) {
+        const focusSelector = !selectedRadioValue('material')
+            ? 'input[name="material"]'
+            : 'input[name="budget"]';
+
+        showWizardStepError(3, 'wizardStep3Error', focusSelector);
+        return false;
+    }
+
+    if (step === 4 && !document.getElementById('leadName')?.value.trim()) {
+        showWizardStepError(4, 'wizardNameError', '#leadName');
+        document.getElementById('leadName')?.classList.add('border-crimson');
+        return false;
+    }
+
+    return true;
+}
+
+function validateWizardBeforeSubmit() {
+    for (let step = 1; step <= totalSteps; step++) {
+        if (!validateWizardStep(step)) {
+            return false;
+        }
+    }
+
+    hideWizardErrors();
+    return true;
+}
+
+function wizNav(direction) {
+    if (direction > 0 && !validateWizardStep(currentStep)) {
+        return;
+    }
+
+    currentStep += direction;
+
+    if (currentStep < 1) currentStep = 1;
+    if (currentStep > totalSteps) currentStep = totalSteps;
+
+    hideWizardErrors();
+    updateWizardNavigation();
     updateWizardSteps();
 }
 
@@ -246,11 +358,8 @@ function mappedWizardValue(type, value) {
 }
 
 function quoteSummary() {
-    const name = document.getElementById('leadName').value;
-    const selectedServices = [];
-    document.querySelectorAll('input[data-service]:checked').forEach(cb => {
-        selectedServices.push(cb.value);
-    });
+    const name = document.getElementById('leadName').value.trim();
+    const selectedServices = selectedServiceInputs().map(cb => cb.value);
 
     return {
         name,
@@ -266,7 +375,7 @@ function quoteSummary() {
 function collectQuoteRequestFormData() {
     const summary = quoteSummary();
 
-    if (summary.selectedServices.length === 0) {
+    if (!validateWizardBeforeSubmit()) {
         return null;
     }
 
@@ -291,7 +400,6 @@ async function storeQuoteRequest() {
     const formData = collectQuoteRequestFormData();
 
     if (!formData) {
-        alert('Kies minimaal een dienst voordat u de aanvraag verstuurt.');
         return false;
     }
 
@@ -396,5 +504,15 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // Initialize wizard
+    document.querySelectorAll('input[data-service]').forEach(input => {
+        input.addEventListener('change', hideWizardErrors);
+    });
+    document.querySelectorAll('input[name="propertyType"], input[name="urgency"], input[name="material"], input[name="budget"]').forEach(input => {
+        input.addEventListener('change', hideWizardErrors);
+    });
+    document.getElementById('leadName')?.addEventListener('input', () => {
+        hideWizardErrors();
+    });
+    updateWizardNavigation();
     updateWizardSteps();
 });
